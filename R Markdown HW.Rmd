@@ -1,0 +1,36 @@
+## R Markdown HW
+
+## About Me
+
+Hi, my name is Mustafa Keser and I am a Senior Undergraduate Industrial Engineering student at Boğazici University and planning to graduate in January 2021. As a result of the development of technology, the importance of data has increased, so data science has attracted my attention. I took your lesson to make this interest turn into knowledge and test myself. I think that the experience I get from this course will have a big impact on my determination of the area I will head to before I start my career. You can reach my career goals and resume from this link. [My Link](https://www.linkedin.com/in/mustafakeser1/)
+
+## useR!2020: Moving backwards with R
+
+In this video, A. Schwab McCoy is talking about moving backward with R. It is not related with moving backward in our programming skils or techniques, but related with moving backward in our courses.  Firstly, the video starts with the definition of backward course design. In this definition, it is explained that the backward course design starts with 2 questions and explains what the students will gain at the end of the course and how they will differ. Then he mentions that the backward design model consists of 3 stages. First, we define what we want students to do at the end of this course. Then, we determine how the students will show what they have learned. Finally, we determine which activities and materials we will use while giving the students the course. After watching the video, as a student, I had an idea of how to learn R. I also learned how to ask for help from our professors in this regard.
+
+[useR!2020: Moving backwards with R](https://www.youtube.com/watch?v=hPQwGyc9SGA)
+
+
+
+
+## How to Collect US Unemployment Data at State or County Level from FRED
+
+In this article, Kan Nishida explains how we can extract US unemployment data from the Federal Reserve Bank website and it is mentioned that there is a package called "tidyquant" in R to do this. Thanks to this package, it has been shown that it is possible to pull data from all sites that have public access.
+
+[How to Collect US Unemployment Data at State or County Level from FRED](https://blog.exploratory.io/how-to-collect-us-unemployment-data-at-state-or-county-level-from-fred-ad04e48686a4)
+
+
+
+## Energy Consumption - Time Series Forecasting in R
+
+This article explains how to estimate energy consumption using time series in R programming. Firstly, the visualization of the data was mentioned and then some comments were made on these visuals. Afterwards, it was tried to find out which variables affect people's energy consumption. It is mentioned which packages should be used for these processes and future energy consumption estimation.
+
+[Energy Consumption - Time Series Forecasting in R](https://www.kaggle.com/apoorvabhide/energy-consumption-time-series-forecasting-in-r)
+
+## Enernoc smart meter data - forecast electricity consumption with similar day approach in R
+
+We have a project on individual energy management so I wanted to research what we could do using R and I reached this article. Estimating a person's energy use includes both data analysis and machine learning. This article describes what data should be collected and how this data should be collected. it is also mentioned how to interpret the data.
+
+[Enernoc smart meter data - forecast electricity consumption with similar day approach in R](https://petolau.github.io/Forecast-electricity-consumption-with-similar-day-approach-in-R/)
+
+
