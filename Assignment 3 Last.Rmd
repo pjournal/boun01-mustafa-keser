@@ -1,0 +1,300 @@
+0---
+title: "Assigment3"
+author: "Mustafa Keser"
+date: "11 09 2020"
+output: 
+  html_document:
+    code_folding: hide    
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+    theme: united
+    highlight: tango
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<style>
+#TOC {
+ color: 
+ font-family: Calibri;
+ background-color:
+ border-color: darkred;
+}
+#header {
+ color: darkred;
+ font-family: Calibri;
+ background-color:
+}
+body {
+ font-family: Calibri;
+ }
+ 
+</style>
+
+
+
+
+# Introduction
+## diamonds dataset:
+
+The diamond data set contains various properties of over 50000 diamonds. These properties affect the price and quality of diamonds. Some of the features in the data set are continuous and some are discrete.
+
+Some Continous Variables;
+
+Prices of the diamonds (in US dollars)
+Carat of diamonds, this fetaure is related with weight of the diamond where 1carat = 200mg
+x: Length in mm
+y: Width in mm
+z: Depth in mm
+
+Some Discrete Variables;
+
+Cut: Quality of cut (Fair <Good <Very Good <Premium <Ideal)
+Color: Color of the diamond [D (best), E, F, G, H, I, J (worst)]
+Clarity-: Clearness amount of the diamond (I1 (worst), SI1, SI2, VS1, VS2, VVS1, VVS2, IF (best))
+
+## What Will I Do 
+
+As this assignment shows, we will work with a large data set. Therefore, we will do Exploratory Data Analysis (EDA) as the first step to analyze large data sets. At this stage, we will first examine the data from certain angles and determine which factors we will focus on. We will try to determine the effects of diamonds' properties on price. For this, we will first do PCA (Principle Component Analysis) and then create a model. With this model, we will evaluate the results we found.
+
+The stages in the assignment are as follows;
+
+1. Various examinations on data
+2. Doing Exploratory Data Analysis (EDA),
+3. Doing Principle Components Analysis (PCA)
+4. Creation and evaluation of the model
+
+
+# Data Explanation
+
+## Used Libraries
+
+I used the libraries that we learned in the course for the analysis I will do on the Diaomand Data set. I used them to do data manipulation and visualization.
+
+Below you can see the libraries I have tried and used;
+  1.readr
+  2.tidyverse
+  3.broom
+  4.ggplot2
+  5.cvms
+  6.randomForest
+  7.tree
+  
+
+```{r library, include=FALSE,echo=FALSE}
+ 
+  library(readr)
+  library(tidyverse)
+  library(broom)  
+  library(ggplot2)
+  library(cvms)
+  library(randomForest)  
+  library(tree)
+  library(hrbrthemes)
+  library(tidyr)
+  
+```
+
+
+## Data
+I used *str function* to examine the data and see its structure in more detail.
+
+```{r stracture}
+str(diamonds)
+
+```
+
+## Summary of Data
+```{r summary}
+summary(diamonds)
+```
+
+
+## Explotory Data Analysis (EDA)
+
+## Prices vs Carat on distribution of clarity
+I colored each point according to the clarity quality of the diamond by using geom_point. As can be seen from the graph, some diamonds are lighter but more expensive because they have good clarity. Likewise, although some diamonds are heavier, they are not expensive because they have low clarity. This situation causes the formation of a rainbow shape on the graphic. For these reasons, we see that clarity is an important feature in determining the price of a diamond.
+
+
+```{r  Prices vs Carat on distribution of clarity}
+
+
+ggplot(diamonds,aes(carat,price,color=clarity))+
+  geom_point()+
+  theme_minimal()+
+  labs(title="Prices vs Carat on distribution of clarity",
+       x="Carat value of diamonds",
+       y="Prices of diamonds")
+```
+
+
+
+##Prices vs Carat on distribution of color
+We colored each point according to the color type of the diamond by using geom_point. As can be seen from the graph, some diamonds are lighter but more expensive because they have desired color. Likewise, although some diamonds are heavier, they are not expensive because they have not desired color. This situation causes the formation of a rainbow shape on the graphic. For these reasons, we see that color type is an important feature in determining the price of a diamond.
+
+```{r  Prices vs Carat on distribution of color}
+
+
+ggplot(diamonds,aes(carat,price,color=color))+
+  geom_point()+
+  theme_minimal()+
+  labs(title="Prices vs Carat on distribution of color",
+       x="Carat value of diamonds",
+       y="Prices of diamonds")
+```
+
+##Prices vs Carat on distribution of cut
+We colored each point according to the cut type of the diamond by using geom_point. In this graphic we made on Cut Type, the rainbow figure did not exactly form because the Cut Type of most diamonds was determined as ideal and premium. For these reasons, a rainbow dominated by two colors has emerged. But we are still faced with the same situation. Although some diamonds are lighter, they are more expensive because the Cut Type is in the desired shape and likewise, although some diamonds are heavier, they are not expensive because the Cut Type is not as desired. So that cut type is an important feature in determining the price of a diamond.
+
+```{r  Prices vs Carat on distribution of cut}
+
+
+ggplot(diamonds,aes(carat,price,color=cut))+
+  geom_point()+
+  theme_minimal()+
+  labs(title="Prices vs Carat on distribution of cut",
+       x="Carat value of diamonds",
+       y="Prices of diamonds")
+```
+
+
+
+
+```{r depth vs price}
+ggplot(diamonds,aes(depth,price,color=color))+
+  geom_point()+
+  theme_classic() +
+  labs(x = "Depths of Diamonds",
+       y = "Prices",
+       title = "Color vs Price")
+
+```
+##Densities of Diamonds based on Cut,Clarity,Color
+
+##Comments abou Densities of Cut,Clarity,Color
+When we look at the density of diamonds in the data according to their properties, we come across a different graph. Although the cut type, color and clarity of the diamonds are at the desired level, we see that these diamonds show density at low prices. But this is because the diamonds with good properties in our data set are of very low weight. If all diamonds had a fixed carat value, we would see that diamonds with the Cut Type, Color and Clarity at the desired level show high prices.
+
+
+```{r Density plot grouped by number of color}
+g <- ggplot(diamonds, aes(price))
+g + geom_density(aes(fill=color), color = NA, alpha=.35) + 
+    labs(title="Density plot", 
+         subtitle="Density Plot Grouped by Number of Color",
+         caption="Source: In R studio",
+         x="Price",
+         fill="# Color")
+```
+```{r Density plot grouped by number of clarity}
+g <- ggplot(diamonds, aes(price))
+g + geom_density(aes(fill=clarity), color = NA, alpha=.35) + 
+    labs(title="Density plot", 
+         subtitle="Density Plot Grouped by Number of clarity",
+         caption="Source: In R studio",
+         x="Price",
+         fill="# Clarity")
+```
+```{r Density plot grouped by number of clarity}
+g <- ggplot(diamonds, aes(price))
+g + geom_density(aes(fill=cut), color = NA, alpha=.35) + 
+    labs(title="Density plot", 
+         subtitle="Density Plot Grouped by Number of cut",
+         caption="Source: In R studio",
+         x="Price",
+         fill="# Cut")
+```
+A different implementation of Density display
+
+```{r using facet_wrap for cut }
+
+diamonds %>%
+  group_by(cut,clarity)%>%
+  summarize(count=n())%>%
+  ggplot(.,aes(x="",y=count,fill=clarity))+
+  geom_bar(width = 1, stat = "identity", position = "fill") +
+  coord_polar("y") +
+  theme_minimal() +
+  theme(plot.title = element_text(vjust = 0.5)) +
+  facet_wrap(~cut) +
+  labs(title = " Clarity Analyses on Cutting Type",
+       fill = "Clarity")
+
+```
+
+
+
+
+## Test&Training Datasets
+I determined the test and training data Set according to the format given in the Assignment descripton.
+
+```{r reading the datasets}
+
+set.seed(503)
+diamonds_test <- diamonds %>% mutate(diamond_id = row_number()) %>% 
+    group_by(cut, color, clarity) %>% sample_frac(0.2) %>% ungroup()
+
+diamonds_train <- anti_join(diamonds %>% mutate(diamond_id = row_number()), 
+    diamonds_test, by = "diamond_id")
+
+diamonds_train
+
+```
+
+## Princible Component Analysis (PCA)
+I tried to detect the most important components using PCA
+
+```{r preparation for pca}
+diamonds.1<-diamonds%>%
+  mutate(color=as.numeric(color),cut=as.numeric(cut),clarity=as.numeric(clarity))
+```
+
+```{r pca}
+pca.diamond<-princomp(diamonds.1,cor=TRUE,scores = TRUE)
+summary(pca.diamond)
+
+```
+
+```{r pca plot}
+plot(diamond.pca,type="l")
+```
+
+
+
+## Tree 
+Decision tree is a type of supervised learning algorithm that can be used in both regression and classification problems. It works for both categorical and continuous input and output variables.
+
+First I determined my formula, then I set up the model and lastly I made prediction.
+
+```{r tree}
+formula=price~carat+cut+color+depth+clarity+table+x+y+z
+diamonds.tree.model<-tree(formula,diamonds_train)
+diamonds_test$tree_prediction<-predict(diamonds.tree.model,newdata = diamonds_test)  
+```
+
+```{r diamonds tree model}
+diamonds.tree.model
+```
+You can see how the nodes of my Decision tree model are determined in the above output.
+
+```{r rsquared of tree model}
+R.squared.tree<-1 - (sum((diamonds_test$tree_prediction-diamonds_test$price)^2)/sum((diamonds_test$price-mean(diamonds_test$price))^2))
+
+R.squared.tree #0.8785363
+
+```
+
+```{r tree plot}
+plot(diamonds.tree.model)
+text(diamonds.tree.model)
+```
+
+```{r tree ggplot}
+summary(diamonds.tree.model)
+```
+
